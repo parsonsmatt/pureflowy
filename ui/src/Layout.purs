@@ -2,7 +2,7 @@ module App.Layout where
 
 import App.Counter as Counter
 import App.NotFound as NotFound
-import App.Routes (Route(Home, NotFound))
+import App.Routes (Route(..))
 import Prelude (($), map)
 import Pux.Html (Html, div, h1, p, text)
 
@@ -12,12 +12,14 @@ data Action
 
 type State =
   { route :: Route
-  , count :: Counter.State }
+  , count :: Counter.State
+  }
 
 init :: State
 init =
   { route: NotFound
-  , count: Counter.init }
+  , count: Counter.init
+  }
 
 update :: Action -> State -> State
 update (PageView route) state = state { route = route }
@@ -32,4 +34,5 @@ view state =
     , case state.route of
         Home -> map Child $ Counter.view state.count
         NotFound -> NotFound.view state
+        Todo str -> text str
     ]
