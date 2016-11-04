@@ -10,4 +10,5 @@ import qualified Network.Wai.Handler.Warp as Warp
 type Api = Raw
 
 application :: IO ()
-application = Warp.run 8081 (serve (Proxy :: Proxy Raw) (serveDirectory "ui/assets"))
+application =
+    Warp.run 8081 (serve (Proxy :: Proxy Raw) (serveDirectory "ui/dist"))
