@@ -4,11 +4,12 @@ module PureFlowy.Api where
 import qualified Network.Wai.Handler.Warp as Warp
 import           Servant
 
-type Api = Raw
+import qualified PureFlowy.Api.Files as Files
+
+type Api = Files.Endpoint
 
 application :: Application
-application = serve (Proxy :: Proxy Api) (serveDirectory "ui/dist")
+application = serve (Proxy :: Proxy Api) Files.handler
 
 main :: IO ()
-main =
-    Warp.run 8081 application
+main = Warp.run 8081 application
