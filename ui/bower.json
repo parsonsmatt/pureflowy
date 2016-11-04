@@ -1,13 +1,15 @@
 {
-  "name": "ui",
+  "name": "pureflowy-ui",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "output"
+    "output",
+    "dist"
   ],
   "dependencies": {
-    "purescript-console": "^1.0.0"
+    "purescript-console": "^1.0.0",
+    "purescript-halogen": "^0.11.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^1.0.0"

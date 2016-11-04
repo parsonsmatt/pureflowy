@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import qualified PureFlowy
 
 main :: IO ()
-main = someFunc
+main = PureFlowy.application

@@ -1,0 +1,43 @@
+name: pureflowy
+version: 0.0.0.0
+synopsis: todo app
+description: todos forever
+category: Web
+author: Matt Parsons
+maintainer: parsonsmatt@gmail.com
+license: BSD3
+git: https://www.github.com/parsonsmatt/pureflowy
+
+dependencies:
+  - base >= 4.8
+  - servant-server
+  - warp
+  - wai
+
+library:
+  source-dirs: src
+
+executables:
+  pureflowy-server:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - base
+    - pureflowy
+
+tests:
+  pureflowy-spec:
+    main: Spec.hs
+    source-dirs: spec
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - pureflowy
+    - QuickCheck
+    - hspec
