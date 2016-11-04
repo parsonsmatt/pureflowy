@@ -1,6 +1,6 @@
 module Main where
 
-import qualified PureFlowy
+import qualified PureFlowy.Api as Api
 
 main :: IO ()
-main = PureFlowy.application
+main = Api.main
