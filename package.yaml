@@ -13,6 +13,7 @@ dependencies:
   - servant-server
   - warp
   - wai
+  - aeson
 
 library:
   ghc-options:
