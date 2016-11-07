@@ -28,7 +28,7 @@ type Api =
 -- * At @POST todos@, create a 'Todo' and return the ID.
 -- * At @DELETE todos/:id@, delete the todo with the given ID.
 type TodoCRUD
-    = Get '[JSON] [Todo]
+    = QueryParam "sortBy" String :> Get '[JSON] [Todo]
     :<|> Capture "id" Int :> Get '[JSON] Todo
     :<|> ReqBody '[JSON] Todo :> Post '[JSON] Int
     :<|> Capture "id" Int :> Delete '[JSON] ()
@@ -49,8 +49,8 @@ handler = listTodos
 
 -- | To list all the available 'Todo', we read the 'IORef' in memory database of
 -- 'Todo's.
-listTodos :: Handler [Todo]
-listTodos = liftIO (readIORef todoDatabase)
+listTodos :: Maybe String -> Handler [Todo]
+listTodos _ = liftIO (readIORef todoDatabase)
 
 -- | Getting a single 'Todo' by the 'Int' identifier reads rather naturally.
 -- First, we reuse the 'listTodos' handler function, returning the list of
@@ -59,7 +59,7 @@ listTodos = liftIO (readIORef todoDatabase)
 -- Otherwise, we return the matching todo item.
 getTodo :: Int -> Handler Todo
 getTodo i = do
-    todos <- listTodos
+    todos <- listTodos Nothing
     case find (\todo -> i == todoId todo) todos of
         Nothing ->
             throwError err404
@@ -70,7 +70,7 @@ getTodo i = do
 -- in the list.
 createTodo :: Todo -> Handler Int
 createTodo postedTodo = do
-    todos <- listTodos
+    todos <- listTodos Nothing
     let newId = 1 + maximum (map todoId todos)
         todo = postedTodo { todoId = newId }
     liftIO (modifyIORef' todoDatabase (todo :))

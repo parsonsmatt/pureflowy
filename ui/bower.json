@@ -1,14 +1,24 @@
 {
-  "name": "pux-starter-app",
-  "homepage": "https://github.com/alexmingoia/pux-starter-app",
+  "name": "central-counter",
+  "homepage": "https://github.com/eskimor/servant-purescript",
   "authors": [
-    "Alex Mingoia <talk@alexmingoia.com>"
+    "Robert Klotzner robert.klotzner AT gmx.at"
   ],
-  "description": "Starter Pux application using webpack with hot-reloading.",
+  "description": "Example for showing use of servant-purescript, servant-subscriber & purescript-bridge",
   "main": "support/index.js",
   "license": "BSD3",
   "dependencies": {
-    "purescript-pux": "^7.0.0",
-    "purescript-pux-devtool": "^4.1.0"
+    "purescript-pux": "^5.0.3",
+    "purescript-affjax": "^1.0.0",
+    "purescript-aff": "^1.0.0",
+    "purescript-argonaut-generic-codecs": "^3.0.0",
+    "purescript-servant-support": "^5.0.1",
+    "purescript-subscriber": "^1.0.0",
+    "purescript-generics": "^1.0.0",
+    "purescript-partial": "^1.1.2",
+    "purescript-dom": "^1.1.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^1.0.0"
   }
 }

@@ -36,10 +36,15 @@ resolver: lts-7.5
 # non-dependency (i.e. a user package), and its test suites and benchmarks
 # will not be run. This is useful for tweaking upstream packages.
 packages:
-- '.'
+  - '.'
+  - location:
+      git: git@github.com:eskimor/servant-purescript
+      commit: master
+    extra-dep: true
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
 extra-deps: []
+
 
 # Override default flag values for local packages and extra-deps
 flags: {}
