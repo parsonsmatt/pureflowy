@@ -1,4 +1,3 @@
--- | TODO: This example could use a rewrite ;-)
 module Main where
 
 import Control.Monad.Aff
