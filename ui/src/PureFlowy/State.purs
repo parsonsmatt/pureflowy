@@ -9,6 +9,7 @@ import PureFlowy.Settings
 type State =
     { todos :: Array Todo
     , settings :: MySettings
+    , currentTodo :: String
     }
 
 initialState :: MySettings -> State
@@ -17,4 +18,5 @@ initialState s =
         [ Todo { todoDone: false, todoId: 1, todoItem: "wat" }
         ]
     , settings: s
+    , currentTodo: ""
     }

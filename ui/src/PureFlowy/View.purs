@@ -1,9 +1,10 @@
 module PureFlowy.View where
 
-import Prelude
+import Prelude hiding (div)
 
-import Pux.Html.Events (onClick)
-import Pux.Html (Html, text, button, span, div, p, h1, ul, li)
+import Pux.Html.Attributes hiding (form)
+import Pux.Html.Events
+import Pux.Html hiding (map)
 
 import PureFlowy.Action
 import PureFlowy.State
@@ -17,7 +18,23 @@ view state =
     , button [onClick \_ -> GetTodos]
         [ text "Get Todos"
         ]
+    , form
+        [ name "updatetodo"
+        , onSubmit \_ -> CreateTodo
+        ]
+        [ input
+            [ type_ "text"
+            , value state.currentTodo
+            , onChange ModifyCurrentTodo
+            ]
+            []
+        ]
     ]
   where
-    mkTodo (Todo { todoDone, todoItem }) =
-        li [] [ text todoItem ]
+    mkTodo (Todo { todoDone, todoItem, todoId }) =
+        li []
+            [ button
+                [ onClick \_ -> DeleteTodo todoId ]
+                [ text "X" ]
+            , text todoItem
+            ]

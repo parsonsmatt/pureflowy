@@ -1,5 +1,7 @@
 module Main where
 
+import Prelude
+
 import Control.Monad.Aff
 import Control.Monad.Except.Trans
 import Control.Monad.Reader.Trans
@@ -8,7 +10,6 @@ import Data.Argonaut.Generic.Aeson
 import Data.Either
 import Data.Generic
 import Data.Maybe
-import Prelude
 import Servant.PureScript.Affjax
 import Servant.PureScript.Settings
 import PureFlowy.Api.MakeRequests as MakeReq
@@ -38,7 +39,6 @@ import PureFlowy.View
 import PureFlowy.Action
 import PureFlowy.Settings
 
-
 type App eff
     = ReaderT MySettings (ExceptT AjaxError (Aff (Effects eff)))
 
@@ -55,6 +55,28 @@ update GetTodos state =
         ]
 update (LoadTodos newTodos) state =
     noEffects state { todos = newTodos }
+update (ModifyCurrentTodo ev) state =
+    noEffects state { currentTodo =  ev.target.value }
+update CreateTodo state =
+    runEffectActions (state { currentTodo = "" })
+        [ do
+            let todo =
+                    { todoDone: false
+                    , todoItem: state.currentTodo
+                    , todoId: 0
+                    }
+            id <- postTodos (Todo todo)
+            pure $ LoadTodos $ state.todos <> [Todo todo { todoId = id }]
+        ]
+update (DeleteTodo id) state =
+    runEffectActions (state { todos = Array.filter p state.todos })
+        [ Nop <$ deleteTodosById id
+        ]
+  where
+    p (Todo { todoId }) = todoId /= id
+
+
+
 
 runEffectActions :: State -> Array (App () Action) -> EffModel State Action (ajax :: AJAX)
 runEffectActions state effects =
